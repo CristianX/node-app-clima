@@ -1,4 +1,4 @@
-const axios = require('axios').default;
+const lugar = require('./lugar/lugar');
 
 const argv = require('yargs').options({
     direccion: {
@@ -10,20 +10,4 @@ const argv = require('yargs').options({
 
 // console.log(argv.direccion);
 
-
-// Preparando direccion, encodeURI convierte a un url seguro
-const encodeUrl = encodeURI(argv.direccion);
-console.log(encodeUrl);
-
-// Creando intancia
-const instance = axios.create({
-    baseURL: `https://devru-latitude-longitude-find-v1.p.rapidapi.com/latlon.php?location=${ encodeUrl }`,
-    headers: { 'x-rapidapi-key': '730ba8dea0mshe34690080ea4082p100360jsn76e333976ea1' } // Header y api key
-});
-
-
-instance.get().then(resp => {
-    console.log(resp.data.Results[0]);
-}).catch(err => {
-    console.log('Error: ', err);
-})
+lugar.getLugarLatLng(argv.direccion).then(console.log);
